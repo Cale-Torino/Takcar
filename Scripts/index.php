@@ -1,18 +1,17 @@
+<?php include_once("config.php");//include config?>
+
 <!DOCTYPE html>
 <html>
 <head>
 <title>TAKCAR SERVICE</title>
-
 <!-- Optional theme -->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/darkly/bootstrap.min.css">
-
 <!-- Jquery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
 </head>
+
 <body>
 <br>
 <div class="container-fluid">
@@ -111,7 +110,7 @@ function error(err) {
   alert('Failed: ' + JSON.stringify(err));
 }
 
-var Authorization = "Bearer token";
+var Authorization = "<?php echo$FreeTakServerAPIToken;?>";
 
 function testFunction(){
   var xhr = new XMLHttpRequest(); //invoke a new instance of the XMLHttpRequest
@@ -119,12 +118,12 @@ function testFunction(){
   xhr.onerror = error;  // call error function if request failed
 
   var json = {uid: uuidv4(),
-    how: "nonCoT",
-    name: "POTUS",
-    longitude: -77.01385,
-    latitude: 38.889,
-    role: "Team Member",
-    team: "Yellow"};//JSON object
+    how: "<?php echo$How;?>",
+    name: "<?php echo$Name;?>",
+    longitude: <?php echo$Longitude;?>,
+    latitude: <?php echo$Latitude;?>,
+    role: "<?php echo$Role;?>",
+    team: "<?php echo$Team;?>"};//JSON object
 
   xhr.open('POST', 'http://127.0.0.1:19023/ManagePresence/postPresence', true); // open a GET request
   xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');//application/json;charset=UTF-8

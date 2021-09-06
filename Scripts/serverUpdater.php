@@ -1,17 +1,19 @@
 <?php
+//include config
+include_once("config.php");
 // set headers
 header('Content-Type: text/event-stream');
 header('Cache-Control: no-cache');
 header('Connection: keep-alive');
 
 //get the session cookie
-$session = json_encode(get_TraccarSession("http://127.0.0.1:8082/api/session?token=hdbtrsy6576hyw84567cSiOuqqhA"));
+$session = json_encode(get_TraccarSession("http://127.0.0.1:8082/api/session?token=$TraccarAPIToken"));
 
 $api_result = json_decode($session, true);
 $JSESSIONID = $api_result['JSESSIONID'];
 
 //get the Traccar positions
-$positions = get_TraccarPosition("http://127.0.0.1:8082/api/positions?token=hdbtrsy6576hyw84567cSiOuqqhA",$JSESSIONID);
+$positions = get_TraccarPosition("http://127.0.0.1:8082/api/positions?token=$TraccarAPIToken",$JSESSIONID);
 
 $json = json_decode($positions);
 
@@ -76,20 +78,13 @@ $opts = array(
     )
   );
   
-  $context = stream_context_create($opts);
-  
   // Open the file using the HTTP headers set above
-  $file = file_get_contents($url, false, $context);
+  $file = file_get_contents($url, false, stream_context_create($opts));
   return $file;
 }
 
-function get_FTSAPI($id, $latitude, $longitude) {
+function get_FTSAPI($id, $latitude, $longitude, $FreeTakServerAPIToken) {
 
-    //http://127.0.0.1:19023/ManagePresence/putPresence
-    //http://127.0.0.1:19023/ManagePresence/postPresence
-    $url = "http://127.0.0.1:19023/ManagePresence/postPresence";
-    //FTS Bearer token
-    $token = "Bearer token";
     //generate GUID
     $guid = vsprintf('%s%s-%s-4000-8%.3s-%s%s%s0',str_split(dechex( microtime(true) * 1000 ) . bin2hex( random_bytes(8) ),4));
 
@@ -104,22 +99,19 @@ function get_FTSAPI($id, $latitude, $longitude) {
         "team" => "Red"
     );
 
-    // for sending data as json type
-    $fields = json_encode($postData);
-
-    $ch = curl_init($url);
+    $ch = curl_init("http://127.0.0.1:19023/ManagePresence/postPresence");
     //set cURL options
     curl_setopt(
         $ch, 
         CURLOPT_HTTPHEADER, 
         array(
             'Content-Type: application/json',
-            'Authorization: '.$token
+            'Authorization: '.$FreeTakServerAPIToken
         )
     );
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $fields);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($postData));
     //execute cURL call
     $result = curl_exec($ch);
     curl_close($ch);
