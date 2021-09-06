@@ -1,7 +1,7 @@
 <?php
 
 //Token vars
-$TraccarAPIToken = "hdbtrsy6576hyw84567cSiOuqqhA";
+$TraccarAPIToken = "YOUR_TRACCAR_API_TOKEN";
 $FreeTakServerAPIToken = "Bearer token";
 
 //`Test Service` button config
