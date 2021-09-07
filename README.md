@@ -1,6 +1,6 @@
 # TAKCAR
 
-[<img src="img/f12.png" width="800"/>](img/f12.png)
+[<img src="img/f12.jpg" width="800"/>](img/f12.jpg)
 
 Quick and dirty example of importing **Traccar** `Lon`, `Lat` coordinates into the **FreeTakServer**.
 
@@ -8,30 +8,55 @@ On page load the script automatically begins a loop getting lat,lon from *Tracca
 
 The `Test Service` button just tests to see that you can see a result on *FTS*.
 
-```JSON
-
-{   
-    "uid": "999b5874-1ebf-11zz-9e70-4e58de281c19",
-    "how": "nonCoT",
-    "name": "POTUS",
-    "longitude": -77.01385,
-    "latitude": 38.889,
-    "role": "Team Member",
-    "team": "Yellow"
-}
-
-```
-
 ## STEPS
-1. create an account and API Token in Traccar.
 
-2. Use the `positions` endpoint in Traccar to get the *latitude* and *longitude* into vars.
+### 1.
+
+Make sure that `Traccar` and `FreeTakServer` are running.
+
+### 2.
+
+Open the `config.php` file and replace the variables with your `Traccar` and `FreeTakServer` variables.
+
+Both the `Traccar` and `FreeTakServer` softwares must be running on the same server computer.
+
+If this is not the case you will need to port forward the appropriate ports to allow the endpoint connections.
+
+The CORS policy will most likely come into play at this point (an easy fix is to run the browser in development mode)
+
+check this link: https://stackoverflow.com/questions/3102819/disable-same-origin-policy-in-chrome
+
+> Open the start menu
+
+> Type `windows`+`R` or open "Run"
+
+> `chrome.exe --user-data-dir="C://Chrome dev session" --disable-web-security`
+
+Note this disables security so run at your own risk.
+
+[<img src="img/config.jpg" width="800"/>](img/config.jpg)
+
+### 3.
+
+Once you have confirmed that the endpoints are communicating you can open `index.php` on your machine via `localhost`
+
+I use the XAMPP system however any system that has `PHP` will suffice.
+
+https://www.apachefriends.org/download.html
+
+### 4.
+
+Now that everything is up and running the `Test Service` button can be clicked to immediately test a `postPresence` position on FTS.
+
+The loop will continue to run as long as the webpage is open.
+
+*getPositions* `Traccar` endpoint example
 
 ```HTTP
 http://127.0.0.1:8082/api/positions?token=Fm9OhNJS7SShyw80M8kdqKMcSiOuqqhA
 ```
 
-3. Using the `postPresence` endpoint in the FreeTakServer Import the *latitude* and *longitude* vars into FreeTakServer.
+*postPresence* `FreeTakServer` endpoint example
 
 ```HTTP
 http://127.0.0.1:19023/ManagePresence/postPresence

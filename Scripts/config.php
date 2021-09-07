@@ -1,6 +1,6 @@
 <?php
 
-//protocol
+//interval
 $Interval = "5000";//checks every 5 seconds
 
 //protocol
