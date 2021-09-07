@@ -7,13 +7,13 @@ header('Cache-Control: no-cache');
 header('Connection: keep-alive');
 
 //get the session cookie
-$session = json_encode(get_TraccarSession("http://127.0.0.1:8082/api/session?token=$TraccarAPIToken"));
+$session = json_encode(get_TraccarSession("$protocol://$TraccarIP:$TraccarPort/api/session?token=$TraccarAPIToken"));
 
 $api_result = json_decode($session, true);
 $JSESSIONID = $api_result['JSESSIONID'];
 
 //get the Traccar positions
-$positions = get_TraccarPosition("http://127.0.0.1:8082/api/positions?token=$TraccarAPIToken",$JSESSIONID);
+$positions = get_TraccarPosition("$protocol://$TraccarIP:$TraccarPort/api/positions?token=$TraccarAPIToken",$JSESSIONID);
 
 $json = json_decode($positions);
 
@@ -30,7 +30,7 @@ foreach($json as $key => $item){
 // );
 
 //forward the positions to the FTS API endpoint
-$result = get_FTSAPI($item->id, $item->latitude, $item->longitude);
+$result = get_FTSAPI($item->id, $item->latitude, $item->longitude, $protocol, $FTSIP, $FTSAPIPort, $FTSAPIToken);
 
 $markers[] = json_encode(
     array(
@@ -83,7 +83,7 @@ $opts = array(
   return $file;
 }
 
-function get_FTSAPI($id, $latitude, $longitude, $FreeTakServerAPIToken) {
+function get_FTSAPI($id, $latitude, $longitude, $protocol, $FTSIP, $FTSAPIPort, $FTSAPIToken) {
 
     //generate GUID
     $guid = vsprintf('%s%s-%s-4000-8%.3s-%s%s%s0',str_split(dechex( microtime(true) * 1000 ) . bin2hex( random_bytes(8) ),4));
@@ -99,14 +99,14 @@ function get_FTSAPI($id, $latitude, $longitude, $FreeTakServerAPIToken) {
         "team" => "Red"
     );
 
-    $ch = curl_init("http://127.0.0.1:19023/ManagePresence/postPresence");
+    $ch = curl_init("$protocol://$FTSIP:$FTSAPIPort/ManagePresence/postPresence");
     //set cURL options
     curl_setopt(
         $ch, 
         CURLOPT_HTTPHEADER, 
         array(
             'Content-Type: application/json',
-            'Authorization: '.$FreeTakServerAPIToken
+            'Authorization: '.$FTSAPIToken
         )
     );
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);

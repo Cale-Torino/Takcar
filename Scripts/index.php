@@ -125,7 +125,7 @@ function testFunction(){
     role: "<?php echo$Role;?>",
     team: "<?php echo$Team;?>"};//JSON object
 
-  xhr.open('POST', 'http://127.0.0.1:19023/ManagePresence/postPresence', true); // open a GET request
+  xhr.open('POST', '<?php echo$protocol;?>://<?php echo$TraccarIP;?>:<?php echo$TraccarPort;?>/ManagePresence/postPresence', true); // open a GET request
   xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');//application/json;charset=UTF-8
   xhr.setRequestHeader('Authorization', Authorization);//application/json;charset=UTF-8
   xhr.send(JSON.stringify(json)); // send the request to the server.

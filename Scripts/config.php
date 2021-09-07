@@ -1,8 +1,17 @@
 <?php
 
-//Token vars
+//protocol
+$protocol = "http";
+
+//Traccar vars
 $TraccarAPIToken = "YOUR_TRACCAR_API_TOKEN";
-$FreeTakServerAPIToken = "Bearer token";
+$TraccarIP = "127.0.0.1";
+$TraccarPort = "8082";
+
+//FTS vars
+$FTSAPIToken = "Bearer token";
+$FTSIP = "127.0.0.1";
+$FTSAPIPort = "19023";
 
 //`Test Service` button config
 $How = "nonCoT";
