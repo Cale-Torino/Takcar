@@ -2,18 +2,18 @@
 //include config
 include_once("config.php");
 // set headers
-header('Content-Type: text/event-stream');
-header('Cache-Control: no-cache');
-header('Connection: keep-alive');
+//header('Content-Type: text/event-stream');
+//header('Cache-Control: no-cache');
+//header('Connection: keep-alive');
 
 //get the session cookie
-$session = json_encode(get_TraccarSession("$protocol://$TraccarIP:$TraccarPort/api/session?token=$TraccarAPIToken"));
+$session = json_encode(get_TraccarSession("$Protocol://$TraccarIP:$TraccarPort/api/session?token=$TraccarAPIToken"));
 
 $api_result = json_decode($session, true);
 $JSESSIONID = $api_result['JSESSIONID'];
 
 //get the Traccar positions
-$positions = get_TraccarPosition("$protocol://$TraccarIP:$TraccarPort/api/positions?token=$TraccarAPIToken",$JSESSIONID);
+$positions = get_TraccarPosition("$Protocol://$TraccarIP:$TraccarPort/api/positions?token=$TraccarAPIToken",$JSESSIONID);
 
 $json = json_decode($positions);
 
@@ -25,18 +25,18 @@ foreach($json as $key => $item){
 //         'latitude' => $item->latitude,
 //         'longitude' => $item->longitude,
 //         'batteryLevel' => $item->attributes->battery,
-//         'Time' => date("Y-m-d h:i:sa")
+//         'time' => date("Y-m-d h:i:sa")
 //     )
 // );
 
 //forward the positions to the FTS API endpoint
-$result = get_FTSAPI($item->id, $item->latitude, $item->longitude, $protocol, $FTSIP, $FTSAPIPort, $FTSAPIToken);
+$result = get_FTSAPI($item->id, $item->latitude, $item->longitude, $Protocol, $FTSIP, $FTSAPIPort, $FTSAPIToken);
 
 $markers[] = json_encode(
     array(
         'result' => 0,
         'guid' => $result,
-        'Time' => date("Y-m-d h:i:sa")
+        'time' => date("Y-m-d h:i:sa")
     )
 );
 }
@@ -45,11 +45,13 @@ $JSON = json_encode(
     array(
         'result' => 0,
         'message' => $markers,
-        'Time' => date("Y-m-d h:i:sa"),
+        'time' => date("Y-m-d h:i:sa"),
     )
 );
 //return the JSON results
-echo "data: {\"result\": 0,\"eud\":[{$JSON}]}\n\n";
+//echo "data: {\"result\": 0,\"eud\":[{$JSON}]}\n\n";
+//{"result":0,"guid":"17bc0344-0dda-4000-8e8f-e8f0b8e0f580","time":"2021-09-07 02:20:55pm"}
+echo '{"result":0,"euds":['.$JSON.']}';
 flush();
 die();
 
@@ -83,7 +85,7 @@ $opts = array(
   return $file;
 }
 
-function get_FTSAPI($id, $latitude, $longitude, $protocol, $FTSIP, $FTSAPIPort, $FTSAPIToken) {
+function get_FTSAPI($id, $latitude, $longitude, $Protocol, $FTSIP, $FTSAPIPort, $FTSAPIToken) {
 
     //generate GUID
     $guid = vsprintf('%s%s-%s-4000-8%.3s-%s%s%s0',str_split(dechex( microtime(true) * 1000 ) . bin2hex( random_bytes(8) ),4));
@@ -99,7 +101,7 @@ function get_FTSAPI($id, $latitude, $longitude, $protocol, $FTSIP, $FTSAPIPort, 
         "team" => "Red"
     );
 
-    $ch = curl_init("$protocol://$FTSIP:$FTSAPIPort/ManagePresence/postPresence");
+    $ch = curl_init("$Protocol://$FTSIP:$FTSAPIPort/ManagePresence/postPresence");
     //set cURL options
     curl_setopt(
         $ch, 

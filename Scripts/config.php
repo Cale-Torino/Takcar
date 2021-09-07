@@ -1,10 +1,13 @@
 <?php
 
 //protocol
-$protocol = "http";
+$Interval = "5000";//checks every 5 seconds
+
+//protocol
+$Protocol = "http";
 
 //Traccar vars
-$TraccarAPIToken = "YOUR_TRACCAR_API_TOKEN";
+$TraccarAPIToken = "YOUR_TRACCAR_API_TOKEN";//YOUR_TRACCAR_API_TOKEN
 $TraccarIP = "127.0.0.1";
 $TraccarPort = "8082";
 

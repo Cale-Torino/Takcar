@@ -59,35 +59,35 @@
 </div>
 
 <script>
-if(typeof(EventSource) !== "undefined") {
 
-//set endpoint
-var source = new EventSource("serverUpdater.php");
+setInterval(timerTAKCAR, <?php echo$Interval;?>);
 
-//prints onmessage result to console
-source.addEventListener('message', function(e) {
-//console.log("message", e.data);
-var inputChecked;
-//Parse the JSON data
-const obj = JSON.parse(e.data);
-//console.log(obj);
-if(obj.result == 0)
-{ 
-  //loop through each device 
-  $.each(obj.eud[0].message, function(key , devices){
-  var table = new Device(devices);
-  //display in table in console
-  console.table(table);        
-  });
+function timerTAKCAR() {
+
+  $.ajax({
+        type:'POST',
+        url: 'serverUpdater.php',
+        //data: data,
+        cache:false,
+         dataType:'JSON',
+        success: function(data) {
+              if(data.result == 0){
+                $.each(data.euds , function(key , devices){ // 
+                  //alert('Success: '+ data.guid+' at time: '+ data.time);
+                  var table = new Device(devices);
+                //display in table in console
+                console.table(table);            
+            });
+           } else {
+              alert('Failure: Could not get devices');
+           }
+   },
+        });
+
 }
-}, false);
 
 function Device(device) {
   this.device = device;
-}
-
-} else {
-document.getElementById("result").innerHTML = "Sorry, your browser does not support server-sent events...";
 }
 
 function uuidv4() {
@@ -125,7 +125,7 @@ function testFunction(){
     role: "<?php echo$Role;?>",
     team: "<?php echo$Team;?>"};//JSON object
 
-  xhr.open('POST', '<?php echo$protocol;?>://<?php echo$TraccarIP;?>:<?php echo$TraccarPort;?>/ManagePresence/postPresence', true); // open a GET request
+  xhr.open('POST', '<?php echo$Protocol;?>://<?php echo$TraccarIP;?>:<?php echo$TraccarPort;?>/ManagePresence/postPresence', true); // open a GET request
   xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');//application/json;charset=UTF-8
   xhr.setRequestHeader('Authorization', Authorization);//application/json;charset=UTF-8
   xhr.send(JSON.stringify(json)); // send the request to the server.
