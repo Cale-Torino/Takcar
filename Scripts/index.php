@@ -5,11 +5,11 @@
 <head>
 <title>TAKCAR SERVICE</title>
 <!-- Optional theme -->
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/darkly/bootstrap.min.css">
+<link rel="stylesheet" href="css/bootstrap.min.css">
 <!-- Jquery -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="js/jquery.min.js"></script>
 <!-- Latest compiled and minified JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
 </head>
 
 <body>
@@ -110,7 +110,7 @@ function error(err) {
   alert('Failed: ' + JSON.stringify(err));
 }
 
-var Authorization = "<?php echo$FreeTakServerAPIToken;?>";
+var Authorization = "<?php echo$FTSAPIToken;?>";
 
 function testFunction(){
   var xhr = new XMLHttpRequest(); //invoke a new instance of the XMLHttpRequest
