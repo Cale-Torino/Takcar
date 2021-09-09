@@ -10,6 +10,10 @@ The `Test Service` button just tests to see that you can see a result on *FTS*.
 
 ## STEPS
 
+Once downloaded copy the folder `takcar_scripts` to your `htdocs` or equivalent folder.
+
+Open the web page via `http://localhost/takcar_scripts/`.
+
 ### 1.
 
 Make sure that `Traccar` and `FreeTakServer` are running.
