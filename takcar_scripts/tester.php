@@ -151,7 +151,6 @@
 </div>
 
 <hr>
-
 <script>
 
 function uuidv4() {
@@ -244,7 +243,6 @@ function xhrRequestTraccar(url){
   xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded;charset=UTF-8');//application/json;charset=UTF-8
   xhr.send(); // send the request to the server.
 }
-
 </script>
 </body>
 </html>
