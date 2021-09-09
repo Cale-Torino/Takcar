@@ -79,3 +79,11 @@ As long as the page is open the loop will continue to run but will stop on close
 [<img src="img/session.jpg" width="800"/>](img/session.jpg)
 
 [<img src="img/positions.jpg" width="800"/>](img/positions.jpg)
+
+> FreeTAKTeam https://github.com/FreeTAKTeam
+
+> Checkout my tutorials https://tutorials.techrad.co.za/2021/04/13/freetakserver-manager
+
+> Video demonstration https://www.youtube.com/watch?v=KvzcrZlr9bU
+
+> Source code https://github.com/Cale-Torino/Takcar
