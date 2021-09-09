@@ -1,10 +1,6 @@
 <?php
 //include config
 include_once("config.php");
-// set headers
-//header('Content-Type: text/event-stream');
-//header('Cache-Control: no-cache');
-//header('Connection: keep-alive');
 
 //get the session cookie
 $session = json_encode(get_TraccarSession("$Protocol://$TraccarIP:$TraccarPort/api/session?token=$TraccarAPIToken"));
@@ -13,21 +9,12 @@ $api_result = json_decode($session, true);
 $JSESSIONID = $api_result['JSESSIONID'];
 
 //get the Traccar positions
-$positions = get_TraccarPosition("$Protocol://$TraccarIP:$TraccarPort/api/positions?token=$TraccarAPIToken",$JSESSIONID);
+$positions = get_TraccarPosition("$Protocol://$TraccarIP:$TraccarPort/api/positions?token=$TraccarAPIToken", $JSESSIONID);
 
 $json = json_decode($positions);
 
 //loop through the positions
 foreach($json as $key => $item){
-//     $markers[] = json_encode(
-//     array(
-//         'id' => $item->id,
-//         'latitude' => $item->latitude,
-//         'longitude' => $item->longitude,
-//         'batteryLevel' => $item->attributes->battery,
-//         'time' => date("Y-m-d h:i:sa")
-//     )
-// );
 
 //forward the positions to the FTS API endpoint
 $result = get_FTSAPI($item->id, $item->latitude, $item->longitude, $Protocol, $FTSIP, $FTSAPIPort, $FTSAPIToken);
@@ -49,8 +36,6 @@ $JSON = json_encode(
     )
 );
 //return the JSON results
-//echo "data: {\"result\": 0,\"eud\":[{$JSON}]}\n\n";
-//{"result":0,"guid":"17bc0344-0dda-4000-8e8f-e8f0b8e0f580","time":"2021-09-07 02:20:55pm"}
 echo '{"result":0,"euds":['.$JSON.']}';
 flush();
 die();
@@ -94,7 +79,7 @@ function get_FTSAPI($id, $latitude, $longitude, $Protocol, $FTSIP, $FTSAPIPort, 
     $postData = array(
         "uid" => $guid,
         "how" => "nonCoT",
-        "name" => "id".$id,
+        "name" => "ID_".$id,
         "longitude" => $longitude,
         "latitude" => $latitude,
         "role" => "Team Member",

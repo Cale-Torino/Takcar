@@ -1,11 +1,14 @@
 <?php include_once("config.php");//include config?>
-
+<!-- http://localhost/takcar_scripts/ -->
 <!DOCTYPE html>
 <html>
 <head>
 <title>TAKCAR SERVICE</title>
+<link rel="shortcut icon" href="img/favicon.ico">
 <!-- Optional theme -->
 <link rel="stylesheet" href="css/bootstrap.min.css">
+<!-- font-awesome -->
+<link rel="stylesheet" href="css/font-awesome.min.css">
 <!-- Jquery -->
 <script src="js/jquery.min.js"></script>
 <!-- Latest compiled and minified JavaScript -->
@@ -17,44 +20,46 @@
 <div class="container-fluid">
 
 <div class="row">
-<h1 class="col-md-12">TAKCAR</h1>
+<h1 class="mx-auto" style="width: 200px;"><span style="color:grey">TAK</span>CAR</h1>
 </div>
 
-<div class="row">
-<h6 class="col-md-12">Quick and dirty example of importing Traccar Lon, Lat coordinates into the FreeTakServer.</h6>
-</div>
+<hr>
 
 <div class="row">
-<div class="col-lg-6">
+<div class="mx-auto" style="width: 700px;">
+<div class="table-responsive">          
+  <table class="table table-condensed table-hover">
+    <thead>
+      <tr>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td></td>
+        <td>Quick and dirty example of importing Traccar Lon, Lat coordinates into the FreeTakServer.</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+</div>
+</div>
+
+<hr>
+
+<div class="row">
+<div class="mx-auto" style="width: 400px;">
 <div class="bs-component">
 <div class="form-group">
                     <br>
-                    <button id="testFunction" type="button" onclick="testFunction()" class="btn btn-primary">Test Service</button>
+                    <button id="testFunction" type="button" onclick="testFunction()" class="btn btn-primary btn-block">Test Service</button>
                     <p id="data" style="margin:10px;"></p>
                     <br>
-                    <!-- <table id="table" class="table table">
-                      <thead>
-                        <tr>
-                          <th scope="col">#</th>
-                          <th scope="col">Result</th>
-                          <th scope="col">Time</th>
-                          <th scope="col">Data</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <th scope="row">1</th>
-                          <td style="color:;"></td>
-                          <td></td>
-                          <td></td>
-                        </tr>
-                      </tbody>
-                    </table> -->
+                    <a href="tester.php" target="_blank" class="btn btn-primary btn-block">Testing Page</a>
                 </div>
         </div>
 </div>
-
-
 
 </div>
 
@@ -65,7 +70,7 @@ setInterval(timerTAKCAR, <?php echo$Interval;?>);
 function timerTAKCAR() {
 
   $.ajax({
-        type:'POST',
+        type: 'POST',
         url: 'serverUpdater.php',
         //data: data,
         cache:false,
