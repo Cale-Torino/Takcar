@@ -7,13 +7,13 @@ $Interval = "5000";//checks Traccar every 5 seconds
 $Protocol = "http";
 
 //Traccar vars
-$TraccarAPIToken = "DRXdaNKWZlhgUIGrGdYXc6XbcKwpUo69";//YOUR_TRACCAR_API_TOKEN
-$TraccarIP = "vms.safe-tvigil.com";//127.0.0.1 localhost
+$TraccarAPIToken = "YOUR_TRACCAR_API_TOKEN";//YOUR_TRACCAR_API_TOKEN
+$TraccarIP = "127.0.0.1";//127.0.0.1 localhost
 $TraccarPort = "8082";
 
 //FTS vars
 $FTSAPIToken = "Bearer token";
-$FTSIP = "vms.safe-tvigil.com";//127.0.0.1 localhost
+$FTSIP = "127.0.0.1";//127.0.0.1 localhost
 $FTSAPIPort = "19023";
 
 //`Test Service` button config
@@ -25,5 +25,5 @@ $Role = "Team Member";
 $Team = "Yellow";
 
 //Use these links to test
-//http://vms.safe-tvigil.com:8082/api/session?token=DRXdaNKWZlhgUIGrGdYXc6XbcKwpUo69
-//http://vms.safe-tvigil.com:8082/api/positions?token=DRXdaNKWZlhgUIGrGdYXc6XbcKwpUo69
+//http://127.0.0.1:8082/api/session?token=YOUR_TRACCAR_API_TOKEN
+//http://127.0.0.1:8082/api/positions?token=YOUR_TRACCAR_API_TOKEN
