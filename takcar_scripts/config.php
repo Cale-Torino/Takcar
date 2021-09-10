@@ -3,13 +3,16 @@
 //interval
 $Interval = "5000";//checks Traccar every 5 seconds
 
-//protocol
-$Protocol = "http";
+//Traccarprotocol
+$TraccarProtocol = "https";
+
+//FTSprotocol
+$FTSProtocol = "http";
 
 //Traccar vars
 $TraccarAPIToken = "YOUR_TRACCAR_API_TOKEN";//YOUR_TRACCAR_API_TOKEN
 $TraccarIP = "127.0.0.1";//127.0.0.1 localhost
-$TraccarPort = "8082";
+$TraccarPort = "443";
 
 //FTS vars
 $FTSAPIToken = "Bearer token";
@@ -27,3 +30,6 @@ $Team = "Yellow";
 //Use these links to test
 //http://127.0.0.1:8082/api/session?token=YOUR_TRACCAR_API_TOKEN
 //http://127.0.0.1:8082/api/positions?token=YOUR_TRACCAR_API_TOKEN
+
+//http://demo.traccar.org/api/session?token=YOUR_TRACCAR_API_TOKEN
+//http://demo.traccar.org/api/positions?token=YOUR_TRACCAR_API_TOKEN

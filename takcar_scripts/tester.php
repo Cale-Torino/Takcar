@@ -209,8 +209,8 @@ function error(err) {
 }
 
 function testFunction(){
-    xhrRequestTraccar("<?php echo$Protocol;?>://<?php echo$TraccarIP;?>:<?php echo$TraccarPort;?>/api/session?token=<?php echo$TraccarAPIToken;?>");
-    xhrRequest("<?php echo$Protocol;?>://<?php echo$FTSIP;?>:<?php echo$FTSAPIPort;?>/ManagePresence/postPresence");
+    xhrRequestTraccar("<?php echo$TraccarProtocol;?>://<?php echo$TraccarIP;?>:<?php echo$TraccarPort;?>/api/session?token=<?php echo$TraccarAPIToken;?>");
+    xhrRequest("<?php echo$FTSProtocol;?>://<?php echo$FTSIP;?>:<?php echo$FTSAPIPort;?>/ManagePresence/postPresence");
     $("#testToast").toast({animation: true, autohide: true, delay: 5000});
     $("#testToast").toast('show');
 }

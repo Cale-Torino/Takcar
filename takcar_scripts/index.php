@@ -130,7 +130,7 @@ function testFunction(){
     role: "<?php echo$Role;?>",
     team: "<?php echo$Team;?>"};//JSON object
 
-  xhr.open('POST', '<?php echo$Protocol;?>://<?php echo$FTSIP;?>:<?php echo$FTSAPIPort;?>/ManagePresence/postPresence', true); // open a GET request
+  xhr.open('POST', '<?php echo$FTSProtocol;?>://<?php echo$FTSIP;?>:<?php echo$FTSAPIPort;?>/ManagePresence/postPresence', true); // open a GET request
   xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');//application/json;charset=UTF-8
   xhr.setRequestHeader('Authorization', Authorization);//application/json;charset=UTF-8
   xhr.send(JSON.stringify(json)); // send the request to the server.

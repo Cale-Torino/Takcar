@@ -3,13 +3,13 @@
 include_once("config.php");
 
 //get the session cookie
-$session = json_encode(get_TraccarSession("$Protocol://$TraccarIP:$TraccarPort/api/session?token=$TraccarAPIToken"));
+$session = json_encode(get_TraccarSession("$TraccarProtocol://$TraccarIP:$TraccarPort/api/session?token=$TraccarAPIToken"));
 
 $api_result = json_decode($session, true);
 $JSESSIONID = $api_result['JSESSIONID'];
 
 //get the Traccar positions
-$positions = get_TraccarPosition("$Protocol://$TraccarIP:$TraccarPort/api/positions?token=$TraccarAPIToken", $JSESSIONID);
+$positions = get_TraccarPosition("$TraccarProtocol://$TraccarIP:$TraccarPort/api/positions?token=$TraccarAPIToken", $JSESSIONID);
 
 $json = json_decode($positions);
 
@@ -17,7 +17,7 @@ $json = json_decode($positions);
 foreach($json as $key => $item){
 
 //forward the positions to the FTS API endpoint
-$result = get_FTSAPI($item->id, $item->latitude, $item->longitude, $Protocol, $FTSIP, $FTSAPIPort, $FTSAPIToken);
+$result = get_FTSAPI($item->id, $item->latitude, $item->longitude, $FTSProtocol, $FTSIP, $FTSAPIPort, $FTSAPIToken);
 
 $markers[] = json_encode(
     array(
@@ -70,7 +70,7 @@ $opts = array(
   return $file;
 }
 
-function get_FTSAPI($id, $latitude, $longitude, $Protocol, $FTSIP, $FTSAPIPort, $FTSAPIToken) {
+function get_FTSAPI($id, $latitude, $longitude, $FTSProtocol, $FTSIP, $FTSAPIPort, $FTSAPIToken) {
 
     //generate GUID
     $guid = vsprintf('%s%s-%s-4000-8%.3s-%s%s%s0',str_split(dechex( microtime(true) * 1000 ) . bin2hex( random_bytes(8) ),4));
@@ -86,7 +86,7 @@ function get_FTSAPI($id, $latitude, $longitude, $Protocol, $FTSIP, $FTSAPIPort, 
         "team" => "Red"
     );
 
-    $ch = curl_init("$Protocol://$FTSIP:$FTSAPIPort/ManagePresence/postPresence");
+    $ch = curl_init("$FTSProtocol://$FTSIP:$FTSAPIPort/ManagePresence/postPresence");
     //set cURL options
     curl_setopt(
         $ch, 
