@@ -1,0 +1,10 @@
+https://www.latlong.net/
+
+$data = '<?xml version="1.0"?><event version="2.0" uid="uid_'.$id.'" type="a-f-G-U-C" how="m-g" start="'.date("Y-m-d\TH:i:s.000\Z",time()).'" time="'.date("Y-m-d\TH:i:s.000\Z",time()).'" stale="'.date("Y-m-d\TH:i:s.000\Z", strtotime('+5 minutes', time())).'"><detail><contact callsign="callsign_'.$id.'"/><__group name="Red" role="role_'.$id.'" /></detail><point le="9999999.0" ce="5.0" hae="217.88824764640728" lon="'.$longitude.'" lat="'.$latitude.'" /></event>';
+
+
+$data = '<?xml version="1.0" encoding="utf-8" standalone="yes"?><event version="2.0" uid="S-1-5-21-'.$guid.'" type="a-f-G-U-C-I" time="'.date("Y-m-d\TH:i:s.000\Z",time()).'" start="'.date("Y-m-d\TH:i:s.000\Z",time()).'" stale="'.date("Y-m-d\TH:i:s.000\Z", strtotime('+5 minutes', time())).'" how="h-g-i-g-o"><point lat="'.$latitude.'" lon="'.$longitude.'" hae="0" ce="9999999" le="9999999"/><detail><takv version="4.1.0.231" platform="WinTAK-CIV" os="Microsoft Windows 10 Pro" device="System manufacturer System Product Name"/><contact callsign="callsign_'.$id.'" endpoint="*:-1:stcp"/><uid Droid="Droid_'.$id.'"/><__group name="Red" role="Team Member"/><status battery="100"/><track course="0.00000000" speed="0.00000000"/></detail></event>';
+
+
+
+$data = '<?xml version="1.0"?><event version="2.0" uid="S-1-5-21-'.$guid.'-ping" type="t-x-c-t" time="'.date("Y-m-d\TH:i:s.000\Z",time()).'" start="'.date("Y-m-d\TH:i:s.000\Z",time()).'" stale="'.date("Y-m-d\TH:i:s.000\Z", strtotime('+5 minutes', time())).'" how="m-g"><point lat="'.$latitude.'" lon="'.$longitude.'" hae="0.00000000" ce="9999999" le="9999999"/><detail/></event>';

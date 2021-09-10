@@ -14,10 +14,19 @@ $positions = get_TraccarPosition("$TraccarProtocol://$TraccarIP:$TraccarPort/api
 $json = json_decode($positions);
 
 //loop through the positions
+$devices = array();
 foreach($json as $key => $item){
 
 //forward the positions to the FTS API endpoint
-$result = get_FTSAPI($item->id, $item->latitude, $item->longitude, $FTSProtocol, $FTSIP, $FTSAPIPort, $FTSAPIToken);
+//$result = get_FTSAPI($item->id, $item->latitude, $item->longitude, $FTSProtocol, $FTSIP, $FTSAPIPort, $FTSAPIToken);
+if (in_array($item->id, $devices)) {
+    //forward the positions to the FTS TCP port
+    $result = get_FTSSOCKETPING($item->id, $item->latitude, $item->longitude, $FTSIP, $FTSPort);
+}else {
+    //forward the positions to the FTS TCP port
+    $result = get_FTSSOCKET($item->id, $item->latitude, $item->longitude, $FTSIP, $FTSPort);
+    $devices[] = $item->id;
+}
 
 $markers[] = json_encode(
     array(
@@ -104,5 +113,51 @@ function get_FTSAPI($id, $latitude, $longitude, $FTSProtocol, $FTSIP, $FTSAPIPor
     curl_close($ch);
 
     return $result;
+}
+
+//https://www.latlong.net/
+function get_FTSSOCKET($id, $latitude, $longitude, $FTSIP, $FTSPort) {
+        //generate GUID
+        //$guid = vsprintf('%s%s40-%s%s3-%s%s43-%s1',str_split(dechex( microtime(true) * 1000 ) . bin2hex( random_bytes(8) ),4));
+        $data = '<?xml version="1.0" encoding="utf-8" standalone="yes"?><event version="2.0" uid="S-1-5-21-1568504889-667903775-1938598950-'.$id.'" type="a-f-G-U-C-I" time="'.date("Y-m-d\TH:i:s.000\Z",time()).'" start="'.date("Y-m-d\TH:i:s.000\Z",time()).'" stale="'.date("Y-m-d\TH:i:s.000\Z", strtotime('+1 minutes', time())).'" how="h-g-i-g-o"><point lat="'.$latitude.'" lon="'.$longitude.'" hae="0" ce="9999999" le="9999999"/><detail><takv version="4.1.0.231" platform="WinTAK-CIV" os="Microsoft Windows 10 Pro" device="System manufacturer System Product Name"/><contact callsign="callsign_'.$id.'" endpoint="*:-1:stcp"/><uid Droid="Droid_'.$id.'"/><__group name="Red" role="Team Member"/><status battery="100"/><track course="0.00000000" speed="0.00000000"/></detail></event>';
+        $SocketConnection = fsockopen($FTSIP, $FTSPort, $errno, $errstr);
+        if (!$SocketConnection) {
+            return "Failed_no_Socket_Connection";
+        } else {
+             fwrite($SocketConnection, $data);//PHP_EOL
+             if(!feof($SocketConnection))
+             {
+                return "SuccessSent";
+             }else
+             {
+                return "Failed_NotSent";
+             }
+             fclose($SocketConnection);
+        }
+        //sleep(0.5);
+    return "Done";
+}
+
+function get_FTSSOCKETPING($id, $latitude, $longitude, $FTSIP, $FTSPort) {
+        //generate GUID
+        //S-1-5-21-1568504889-667903775-1938598950-1001-ping
+        //$guid = vsprintf('%s%s40-%s%s3-%s%s43-%s1',str_split(dechex( microtime(true) * 1000 ) . bin2hex( random_bytes(8) ),4));
+        $data = '<?xml version="1.0"?><event version="2.0" uid="S-1-5-21-1568504889-667903775-1938598950-'.$id.'-ping" type="t-x-c-t" time="'.date("Y-m-d\TH:i:s.000\Z",time()).'" start="'.date("Y-m-d\TH:i:s.000\Z",time()).'" stale="'.date("Y-m-d\TH:i:s.000\Z", strtotime('+1 minutes', time())).'" how="m-g"><point lat="'.$latitude.'" lon="'.$longitude.'" hae="0.00000000" ce="9999999" le="9999999"/><detail/></event>';
+        $SocketConnection = fsockopen($FTSIP, $FTSPort, $errno, $errstr);
+        if (!$SocketConnection) {
+            return "Failed_no_Socket_Connection";
+        } else {
+             fwrite($SocketConnection, $data);//PHP_EOL
+             if(!feof($SocketConnection))
+             {
+                return "SuccessSent";
+             }else
+             {
+                return "Failed_NotSent";
+             }
+             fclose($SocketConnection);
+        }
+        //sleep(0.5);
+    return "Done";
 }
 ?>

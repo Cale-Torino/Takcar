@@ -1,10 +1,10 @@
 <?php
 
 //interval
-$Interval = "30000";//checks Traccar every 30 seconds
+$Interval = "5000";//checks Traccar every 5 seconds
 
 //Traccarprotocol
-$TraccarProtocol = "http";
+$TraccarProtocol = "https";
 
 //FTSprotocol
 $FTSProtocol = "http";
@@ -18,7 +18,6 @@ $TraccarPort = "443";
 $FTSAPIToken = "Bearer token";
 $FTSIP = "127.0.0.1";//127.0.0.1 localhost
 $FTSAPIPort = "19023";
-$FTSPort = "8087";//8089 for SSL
 
 //`Test Service` button config
 $How = "nonCoT";
