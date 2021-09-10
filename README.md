@@ -2,11 +2,13 @@
 
 [<img src="img/f12.jpg" width="800"/>](img/f12.jpg)
 
-Quick and dirty example of importing **Traccar** `Lon`, `Lat` coordinates into the **FreeTakServer**.
+A quick example of importing **Traccar** `longitude`, `latitude` coordinates into the **FreeTakServer**.
 
-On page load the script automatically begins a loop getting lat,lon from *Traccar* and posting them to *FTS*.
+On page load the script automatically begins a loop getting the longitude, latitude of devices from *Traccar* and posting them to *FTS*.
 
 The `Test Service` button just tests to see that you can see a result on *FTS*.
+
+There is also a dedicated testing page which tests the endpoints to confirm that they are reachable.
 
 ## STEPS
 
