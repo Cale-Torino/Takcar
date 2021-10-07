@@ -68,6 +68,36 @@ http://127.0.0.1:8082/api/positions?token=Your_Token_Here
 http://127.0.0.1:19023/ManagePresence/postPresence
 ```
 
+I also added the function of posting RAW COT data via TCP on port `8087` via a PHP socket.
+
+`get_FTSSOCKET`
+
+```XML
+<?xml version="1.0" encoding="UTF-8"?>
+<event version="2.0" uid="S-1-5-21-1568504889-667903775-1938598950-id" type="a-f-G-U-C-I" time="time" start="time" stale="time+5" how="h-g-i-g-o">
+   <point lat="latitude" lon="longitude" hae="0" ce="9999999" le="9999999" />
+   <detail>
+      <takv version="4.1.0.231" platform="WinTAK-CIV" os="Microsoft Windows 10 Pro" device="System manufacturer System Product Name" />
+      <contact callsign="callsign_id" endpoint="*:-1:stcp" />
+      <uid Droid="Droid_id" />
+      <__group name="Red" role="Team Member" />
+      <status battery="100" />
+      <track course="0.00000000" speed="0.00000000" />
+   </detail>
+</event>
+```
+
+`get_FTSSOCKETPING`
+
+```XML
+<?xml version="1.0" encoding="UTF-8"?>
+<event version="2.0" uid="S-1-5-21-1568504889-667903775-1938598950-id-ping" type="t-x-c-t" time="time" start="time" stale="time+5" how="m-g">
+   <point lat="latitude" lon="longitude" hae="0.00000000" ce="9999999" le="9999999" />
+   <detail />
+</event>
+```
+
+
 ## Notes
 
 The scripts assume `19023` is the *FTS* API port and that `8082` is the *Traccar* API port.
