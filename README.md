@@ -2,7 +2,7 @@
 
 [<img src="img/f12.jpg" width="800"/>](img/f12.jpg)
 
-A quick example of importing **Traccar** `longitude`, `latitude` coordinates into the **FreeTakServer**.
+A quick example of importing the **Traccar** `longitude` and `latitude` coordinates into the **FreeTakServer**.
 
 On page load the script automatically begins a loop getting the longitude, latitude of devices from *Traccar* and posting them to *FTS*.
 
