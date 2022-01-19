@@ -40,15 +40,20 @@
       <tr>
         <td>1</td>
         <td><code>http://YOUR_IP:8082/api/session?token=YOUR_TOKEN</code></td>
-        <td>Get the Traccar Jsession coockie</td>
+        <td>Get the Traccar Jsession cookie</td>
       </tr>
       <tr>
         <td>2</td>
         <td><code>http://YOUR_IP:8082/api/positions?token=YOUR_TOKEN</code></td>
-        <td>Get the Traccar positions via</td>
+        <td>Get the Traccar positions via endpoint</td>
       </tr>
       <tr>
         <td>3</td>
+        <td><code>http://YOUR_IP:8082/api/devices?token=YOUR_TOKEN</code></td>
+        <td>Get the Traccar devices via endpoint</td>
+      </tr>
+      <tr>
+        <td>4</td>
         <td><code>http://YOUR_IP:19023/ManagePresence/postPresence</code></td>
         <td>Post the Traccar positions to FreeTakServer</td>
       </tr>
