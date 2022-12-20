@@ -40,3 +40,50 @@
 	<detail/>
 </event>
 ```
+
+Make the script executable `chmod +x example.py` and use `#!/usr/bin/env python` then run it `./example.py` without the need of a `.sh` script.
+
+Make the file executable
+`chmod +x /usr/bin/example.sh`
+
+Make service
+`vi /etc/systemd/system/example.service`
+
+```
+[Unit]
+Description=TakCar service
+Documentation=https://github.com/Cale-Torino/Takcar
+
+[Service]
+Type=simple
+User=root
+Group=root
+TimeoutStartSec=0
+Restart=on-failure
+RestartSec=30s
+#ExecStartPre=
+ExecStart=/usr/bin/example.sh
+SyslogIdentifier=Diskutilization
+#ExecStop=
+
+[Install]
+WantedBy=multi-user.target
+```
+
+To run
+`systemctl start example.service`
+
+To monitor
+`systemctl status example.service`
+
+To check log
+`cat /var/log/example.txt`
+
+To enable or disable service at system boot
+
+- enable: `systemctl enable example.service`
+- disable: `systemctl disable example.service`
+
+To start and stop the service
+- enable: `systemctl stop example.service`
+- disable: `systemctl restart example.service`
