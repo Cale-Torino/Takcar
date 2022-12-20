@@ -1,6 +1,6 @@
 <?php
 
-//interval
+//Interval
 $Interval = "30000";//checks Traccar every 30 seconds
 
 //Traccarprotocol
