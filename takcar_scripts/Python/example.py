@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+#Run as cronjob every x amount of time
 import socket
 import _thread
 import random
