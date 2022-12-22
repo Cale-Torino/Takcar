@@ -113,8 +113,7 @@ def sendHTTP(msgbuffer,ip):
         head = protocol[0]
         imei = protocol[1]
         # defining the api-endpoint 
-        #API_ENDPOINT = "https://techrad.co.za/java/test/java_in_json.php?API_KEY=java1234&USERNAME=java&DATA=Sent"
-        API_ENDPOINT = "https://api.telegram.org/bot1726488859:AAGy13koBigjBU0h_MSxzglmaAAbPzqH8DI/sendMessage?chat_id=-268086624&text="+imei+"%0A"+ip
+        API_ENDPOINT = "https://my.endpoint.com/api/sendMessage?test=test&text="+imei+"%0A"+ip
         # data to be sent to api
         data = {'head':head,
                 'imei':imei,
