@@ -21,32 +21,35 @@ Devices = "http://YOUR_IP:8082/api/devices?token=YOUR_TOKEN"
 PostPresence = "http://YOUR_IP:19023/ManagePresence/postPresence"
 
 #Interval
-Interval = "30000";//checks Traccar every 30 seconds
+Interval = "30000";# checks Traccar every 30 seconds
 
 #Traccarprotocol
-TraccarProtocol = "http";
+TraccarProtocol = "http"
 
 #FTSprotocol
-FTSProtocol = "http";
+FTSProtocol = "http"
 
 #Traccar vars
-TraccarAPIToken = "YOUR_TRACCAR_API_TOKEN";//YOUR_TRACCAR_API_TOKEN
-TraccarIP = "127.0.0.1";//127.0.0.1 localhost
-TraccarPort = "443";
+TraccarAPIToken = "YOUR_TRACCAR_API_TOKEN"#YOUR_TRACCAR_API_TOKEN
+TraccarIP = "127.0.0.1"#127.0.0.1 localhost
+TraccarPort = "443"
 
 #FTS vars
-FTSAPIToken = "Bearer token";
-FTSIP = "127.0.0.1";//127.0.0.1 localhost
-FTSAPIPort = "19023";
-FTSPort = "8087";//8089 for SSL
+FTSAPIToken = "Bearer token"
+FTSIP = "127.0.0.1"#127.0.0.1 localhost
+FTSAPIPort = "19023"
+FTSPort = "8087"#8089 for SSL
 
 #`Test Service` button config
-How = "nonCoT";
-Name = "POTUS";
-Longitude = -77.01385;
-Latitude = 38.889;
-Role = "Team Member";
-Team = "Yellow";
+How = "nonCoT"
+Name = "POTUS"
+Longitude = -77.01385
+Latitude = 38.889
+Role = "Team Member"
+Team = "Yellow"
+
+msgbuffer=""
+ip=""
 
 #Use these links to test
 #http://127.0.0.1:8082/api/session?token=YOUR_TRACCAR_API_TOKEN
@@ -81,8 +84,6 @@ f"<event version=\"2.0\" uid=\"S-1-5-21-1568504889-667903775-1938598950-{id}_{na
 f"</event>")
 
 
-
-
 #Logger logs to file and console output
 timestr = time.strftime("%Y-%m-%d_%H-%M-%S")
 logger = logging.getLogger()
@@ -101,8 +102,6 @@ logger.addHandler(stdout_handler)
 
 #logger.info("Socket created")
 #logger.error("Error : Message " + str(msg), exc_info=True)
-
-_thread.start_new_thread(sendHTTP ,(msgbuffer,ip,))
 
 #########################################################################################################
 
@@ -127,3 +126,5 @@ def sendHTTP(msgbuffer,ip):
         logger.error("Error : Message " + str(msg), exc_info=True)
 
 #########################################################################################################
+
+_thread.start_new_thread(sendHTTP ,(msgbuffer,ip,))
