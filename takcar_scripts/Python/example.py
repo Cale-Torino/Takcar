@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 #Run as cronjob every x amount of time
 import socket
-import _thread
+import json
+from threading import Thread
 import random
 import os
 import os.path
@@ -14,49 +15,35 @@ import logging
 import sys
 import logging.handlers as handlers
 
+import config
+
+#Logger logs to file and console output
+timestr = time.strftime("%Y-%m-%d_%H-%M-%S")
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
+formatter = logging.Formatter('%(asctime)s > %(levelname)s | %(message)s', '%m-%d-%Y %H:%M:%S')
+stdout_handler = logging.StreamHandler(sys.stdout)
+stdout_handler.setLevel(logging.DEBUG)
+stdout_handler.setFormatter(formatter)
+#file_handler = logging.FileHandler("ExampleApp_" + timestr + ".log")
+# 25000000 25 mb
+file_handler = handlers.RotatingFileHandler(sys.path[0]+"/ExampleApp_" + timestr + ".log", maxBytes=25000000, backupCount=2)
+file_handler.setLevel(logging.DEBUG)
+file_handler.setFormatter(formatter)
+logger.addHandler(file_handler)
+logger.addHandler(stdout_handler)
+
+logger.info("App Start")
+#logger.info("Socket created")
+#logger.error("Error : Message " + str(msg), exc_info=True)
+
+#########################################################################################################
+
 #Endpoints
 Session = "http://YOUR_IP:8082/api/session?token=YOUR_TOKEN"
 Positions = "http://YOUR_IP:8082/api/positions?token=YOUR_TOKEN"
 Devices = "http://YOUR_IP:8082/api/devices?token=YOUR_TOKEN"
 PostPresence = "http://YOUR_IP:19023/ManagePresence/postPresence"
-
-#Interval
-Interval = "30000";# checks Traccar every 30 seconds
-
-#Traccarprotocol
-TraccarProtocol = "http"
-
-#FTSprotocol
-FTSProtocol = "http"
-
-#Traccar vars
-TraccarAPIToken = "YOUR_TRACCAR_API_TOKEN"#YOUR_TRACCAR_API_TOKEN
-TraccarIP = "127.0.0.1"#127.0.0.1 localhost
-TraccarPort = "443"
-
-#FTS vars
-FTSAPIToken = "Bearer token"
-FTSIP = "127.0.0.1"#127.0.0.1 localhost
-FTSAPIPort = "19023"
-FTSPort = "8087"#8089 for SSL
-
-#`Test Service` button config
-How = "nonCoT"
-Name = "POTUS"
-Longitude = -77.01385
-Latitude = 38.889
-Role = "Team Member"
-Team = "Yellow"
-
-msgbuffer=""
-ip=""
-
-#Use these links to test
-#http://127.0.0.1:8082/api/session?token=YOUR_TRACCAR_API_TOKEN
-#http://127.0.0.1:8082/api/positions?token=YOUR_TRACCAR_API_TOKEN
-
-#http://demo.traccar.org/api/session?token=YOUR_TRACCAR_API_TOKEN
-#http://demo.traccar.org/api/positions?token=YOUR_TRACCAR_API_TOKEN
 
 id = ""
 name = ""
@@ -83,36 +70,36 @@ f"<event version=\"2.0\" uid=\"S-1-5-21-1568504889-667903775-1938598950-{id}_{na
 	f"<detail/>"
 f"</event>")
 
+#########################################################################################################
 
-#Logger logs to file and console output
-timestr = time.strftime("%Y-%m-%d_%H-%M-%S")
-logger = logging.getLogger()
-logger.setLevel(logging.INFO)
-formatter = logging.Formatter('%(asctime)s > %(levelname)s | %(message)s', '%m-%d-%Y %H:%M:%S')
-stdout_handler = logging.StreamHandler(sys.stdout)
-stdout_handler.setLevel(logging.DEBUG)
-stdout_handler.setFormatter(formatter)
-#file_handler = logging.FileHandler("SocketServer_" + timestr + ".log")
-# 25000000 25 mb
-file_handler = handlers.RotatingFileHandler(sys.path[0]+"/SocketServer_" + timestr + ".log", maxBytes=25000000, backupCount=2)
-file_handler.setLevel(logging.DEBUG)
-file_handler.setFormatter(formatter)
-logger.addHandler(file_handler)
-logger.addHandler(stdout_handler)
-
-#logger.info("Socket created")
-#logger.error("Error : Message " + str(msg), exc_info=True)
+def getR():
+    try:
+        logger.info("[HTTP REQUEST START]")
+        # defining the api-endpoint 
+        # https://dummyjson.com
+        # API_ENDPOINT = "https://dummyjson.com/products/1"+imei+"%0A"+ip
+        API_ENDPOINT = "https://dummyjson.com/products/1"
+        # data to be sent to api
+        # sending post request and saving response as response object
+        r = requests.get(url = API_ENDPOINT)
+        url = r.text
+        print("The response is:%s"%url)
+        logger.info("[HTTP REQUEST END]")
+    except Exception as msg:
+        logger.error("Error : Message " + str(msg), exc_info=True)
 
 #########################################################################################################
 
-def sendHTTP(msgbuffer,ip):
+def postR(msgbuffer,ip):
     try:
         logger.info("[HTTP REQUEST START]")
         protocol = msgbuffer.split(",")
         head = protocol[0]
         imei = protocol[1]
         # defining the api-endpoint 
-        API_ENDPOINT = "https://my.endpoint.com/api/sendMessage?test=test&text="+imei+"%0A"+ip
+        # https://dummyjson.com
+        API_ENDPOINT = "https://dummyjson.com/products/1"+imei+"%0A"+ip
+        # API_ENDPOINT = "https://dummyjson.com/products/1"
         # data to be sent to api
         data = {'head':head,
                 'imei':imei,
@@ -127,4 +114,10 @@ def sendHTTP(msgbuffer,ip):
 
 #########################################################################################################
 
-_thread.start_new_thread(sendHTTP ,(msgbuffer,ip,))
+#_thread.start_new_thread(sendHTTP ,(config.msgbuffer,config.ip,))
+
+if __name__ == "__main__":
+    #msgbuffer = "null"
+    #ip = "null"
+    #Thread(target=getR, args=(config.msgbuffer,config.ip,)).start()
+    Thread(target=getR, args=()).start()
